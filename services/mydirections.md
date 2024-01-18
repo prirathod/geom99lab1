@@ -9,7 +9,7 @@ Be creative and use multiple parameters from the API documentation to earn a top
 ## Directions URL
 
 ```
-https://maps.googleapis.com/maps/api/directions/json?origin=place_id:ChIJCWhtfJgrXDkRkQM-h6cGb_g&destination=place_id:ChIJcdSOFk3PXzkRmVCXOQLjW8k&avoid=tolls|highways|ferries&waypoints=optimize:true|place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc|via:place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc&wavepoint_order=[2,1,3]&region=in&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE)
+https://maps.googleapis.com/maps/api/directions/json?origin=place_id:ChIJCWhtfJgrXDkRkQM-h6cGb_g&destination=place_id:ChIJcdSOFk3PXzkRmVCXOQLjW8k&avoid=tolls|highways|ferries&waypoints=optimize:true|place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc|via:place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc&wavepoint_order=[2,1,3]&region=in&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
 ```
 
 Copy/paste the JSON results and save them into the empty file ```mydirections.json``` in this repository
@@ -20,10 +20,11 @@ Read the Rubric to find out about what options exist to earn more marks. Here is
 
 ### Simple option:
 
-(returns map-preferred) Maps PlaceID search: https://www.google.com/maps/place/?q=place_id:ChIJFfiCrdo4Qm0RqPwuOAVtaj8
+(returns map-preferred) Maps PlaceID search:
+https://www.google.com/maps/place/Maharaja+Sayajirao+University,+Sayajiganj,+Vadodara,+Gujarat+390020,+India/@22.3124685,73.1838455,17z/data=!3m1!4b1!4m6!3m5!1s0x395fcf4d168ed471:0xc95be30239975099!8m2!3d22.3120277!4d73.1836372!16s%2Fg%2F1jky820_9?entry=ttu
 ### Efficient option
 
-(returns JSON) API PlaceID link https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJV2BQ4laeekgRFauLvdXbFXE&key=<INSERTKEY>
+(returns JSON) API PlaceID link https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJcdSOFk3PXzkRmVCXOQLjW8k&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
 
   which the JSON will have a CID that can be directly used as a URL like https://maps.google.com/?cid=4569584641105657000
 
