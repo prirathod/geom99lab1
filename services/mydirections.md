@@ -9,7 +9,7 @@ Be creative and use multiple parameters from the API documentation to earn a top
 ## Directions URL
 
 ```
-https://maps.googleapis.com/maps/api/directions/json?origin=place_id:ChIJCWhtfJgrXDkRkQM-h6cGb_g&destination=place_id:ChIJcdSOFk3PXzkRmVCXOQLjW8k&avoid=tolls|highways|ferries&destination=Vadodara&mode=transit?origin=Gandhinagar&waypoints=optimize:true|place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc|via:place_id:ChIJRWr63-jIXzkRv-bDMQc8TUc&waypoint_order=[2,1,3]&unit=metric&region=in&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
+https://maps.googleapis.com/maps/api/directions/json?origin=place:Laxmi+Vilas+Palace+Vadodara+Gujarat&destination=place_id:ChIJ91Mmr_DFXzkRCwswfBectiE&avoid=tolls%7Chighways%7Cferries&destination=Adalaj+Stepwell+Gandhinagar+Gujarat&transit_mode=train?origin=Laxmi+Vilas+Palace+Vadodara&waypoints=optimize:true%7Cplace_id:ChIJib_FsNopXDkRjzm9vcTdHds%7Cvia:place:Poicha%7Cvia:place:Nadiad&waypoint_order=[3,1,2]&unit=metric&region=in&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
 ```
 
 Copy/paste the JSON results and save them into the empty file ```mydirections.json``` in this repository
