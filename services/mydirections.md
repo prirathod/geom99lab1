@@ -26,7 +26,7 @@ https://www.google.com/maps/place/Maharaja+Sayajirao+University,+Sayajiganj,+Vad
 
 (returns JSON) API PlaceID link https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJcdSOFk3PXzkRmVCXOQLjW8k&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
 
-  which the JSON will have a CID that can be directly used as a URL like https://maps.google.com/?cid=4569584641105657000
+  which the JSON will have a CID that can be directly used as a URL like https://maps.google.com/?cid=ChIJ91Mmr_DFXzkRCwswfBectiE
 
 
 ____
