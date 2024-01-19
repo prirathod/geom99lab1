@@ -21,7 +21,7 @@ Read the Rubric to find out about what options exist to earn more marks. Here is
 ### Simple option:
 
 (returns map-preferred) Maps PlaceID search:
-https://www.google.com/maps/place/Maharaja+Sayajirao+University,+Sayajiganj,+Vadodara,+Gujarat+390020,+India/@22.3124685,73.1838455,17z/data=!3m1!4b1!4m6!3m5!1s0x395fcf4d168ed471:0xc95be30239975099!8m2!3d22.3120277!4d73.1836372!16s%2Fg%2F1jky820_9?entry=ttu
+https://www.google.com/maps/place/Laxmi+Vilas+Palace/@22.2935993,73.1919074,17z/data=!3m1!4b1!4m6!3m5!1s0x395fc5f0af2653f7:0x21b69c177c300b0b!8m2!3d22.2935993!4d73.1919074!16zL20vMDh5X3Mz?entry=ttu
 ### Efficient option
 
 (returns JSON) API PlaceID link https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJcdSOFk3PXzkRmVCXOQLjW8k&key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE
