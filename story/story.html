@@ -1,56 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Road Trip</title>
-  <!-- Google Cloud Platform Maps API Source -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <link rel="stylesheet" type="text/css" href="./style.css" />
-  <script type="module" src="./index.js"></script>
-</head>
-<body>
-  <div id="container">
-    <div id="map"></div>
-    <div id="sidebar">
-      <!-- Form for trip details -->
-      <div>
-        <b>Start:</b>
-        <select id="start">
-          <option value="Vadodara, GJ">Vadodara, GJ</option>
-        </select>
-        <br />
-        <b>Waypoints:</b> <br />
-        <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
-        <select multiple id="waypoints">
-          <option value="Vasad, gujarat">Vasad, GJ</option>
-          <option value="anand, gj">Anand, GJ</option>
-          <option value="nadiad, gj">Nadiad, GJ</option>
-          <option value="ahmedabad, gj">Ahmedabad, GJ</option>
-          <option value="kherwara, rj">Kherwara, RJ</option>
-          <option value="balicha, rj">Balicha, RJ</option>
-        </select>
-        <br />
-        <b>End:</b>
-        <select id="end">
-          <option value="udaipur, rj">Udaipur, RJ</option>
-        </select>
-        <br />
-        <input type="submit" id="submit" />
+<html>
+  <head>
+    <title>Waypoints in Directions</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="map"></div>
+      <div id="sidebar">
+        <div>
+          <b>Start:</b>
+          <select id="start">
+            <option value="Vadodara, GJ">Vadodara, GJ</option>
+           
+          </select>
+          <br />
+          <b>Waypoints:</b> <br />
+          <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
+          <select multiple id="waypoints">
+            <option value="Vasad, gujarat">Vasad, GJ</option>
+            <option value="anand, gj">Anand, GJ</option>
+            <option value="nadiad, gj">Nadiad, GJ</option>
+            <option value="ahmedabad, gj">Ahmedabad, GJ</option>
+            <option value="kherwara, rj">Kherwara, RJ</option>
+            <option value="balicha, rj">Balicha, RJ</option>
+          </select>
+          <br />
+          <b>End:</b>
+          <select id="end">
+            <option value="udaipur, rj">Udaipur, RJ</option>
+          </select>
+          <br />
+          <input type="submit" id="submit" />
+        </div>
+            <!-- Directions panel to display route details -->
+        <div id="directions-panel"></div>
       </div>
-      <!-- Directions panel to display route details -->
-      <div id="directions-panel"></div>
     </div>
-  </div>
-   <!-- Birthday Trip Paragraph -->
-    <div id="trip-description">
-      <p>
-        Embarking on a special birthday journey with my family from Vadodara to Udaipur, we are set to create unforgettable memories along the scenic roads of Gujarat and Rajasthan. Celebrating the joyous occasion, our road trip includes waypoints in Vadodara, Anand, Nadiad, Ahmedabad, Kherwara, and Balicha before reaching the enchanting city of Udaipur. The anticipation of exploring new places, experiencing diverse cultures, and enjoying the company of loved ones makes this birthday adventure truly magical. With the help of Google Maps, we are all set to navigate the route, discover hidden gems, and make the most of this joy-filled road expedition. Let the celebration begin as we traverse through the picturesque landscapes on this special day!
-      </p>
-    </div>
+ 
     
 
-  <!-- Google Maps API with callback to initialize the map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" defer></script>
-</body>
+    <!-- 
+      The `defer` attribute causes the callback to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises.
+      See https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
+        <!-- Google Maps API with callback to initialize the map -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly"
+      defer
+    ></script>
+  </body>
 </html>
