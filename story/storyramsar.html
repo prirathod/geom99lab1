@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ramsar Sites of Gujarat</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <style>
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+      }
+
+      #container {
+        height: 100%;
+        display: flex;
+      }
+
+      #sidebar {
+        flex-basis: 15rem;
+        flex-grow: 1;
+        padding: 1rem;
+        max-width: 30rem;
+        height: 100%;
+        border-right: 1px solid #ccc;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+
+      #map-container {
+        flex-basis: 60%;
+        flex-grow: 4;
+        height: 100%;
+      }
+
+      #map {
+        height: 100%;
+      }
+
+      #legend-container {
+        flex-basis: 25%;
+        padding: 1rem;
+        background-color: #f2f2f2;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+
+      #directions-panel {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e6e6e6;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      #submit {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+      }
+
+      #submit:hover {
+        background-color: #45a049;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="sidebar">
+        <div>
+          <b>Start:</b>
+          <select id="start">
+            <option value="Gir National Park, GJ">Gir National Park, GJ</option>
+          </select>
+          <br />
+          <b>Waypoints:</b> <br />
+          <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
+          <select multiple id="waypoints">
+            <option value="khijadiya, Jamnagar">Khijadiya, GJ</option>
+            <option value="Nal sarovar Bird sanctuary, Ahmedabad">Nal Sarovar Bird Sanctuary, GJ</option>
+            <option value="Thol Lake, Mehsana">Thol Lake, GJ</option>
+            <option value="Wadhvana wetland, vadodara">Vadodara, GJ</option>
+          </select>
+          <br />
+          <b>End:</b>
+          <select id="end">
+            <option value="sambhar lake, rj">Sambhar Salt Lake, RJ</option>
+          </select>
+          <br />
+          <input type="submit" id="submit" />
+        </div>
+        <!-- Directions panel to display route details -->
+        <div id="directions-panel"></div>
+      </div>
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
+      <div id="legend-container"></div>
+    </div>
+
+    <!-- Google Maps API with callback to initialize the map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" 
+    defer>
+
+    </script>
+
+    <!-- Your JavaScript code -->
+    <script type="module">
+      // The following example creates five accessible and
+      // focusable markers.
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 8,
+          center: { lat: 21.1243, lng: 70.8242 },
+        });
+        // Set LatLng and title text for the markers. The first marker (Boynton Pass)
+        // receives the initial focus when tab is pressed. Use arrow keys to
+        // move between markers; press tab again to cycle through the map controls.
+        const tourStops = [
+          [{ lat: 22.51, lng: 70.14 }, "Khijadiya Wildlife Sanctuary"],
+          [{ lat: 22.46, lng: 72.02 }, "Nalsarovar"],
+          [{ lat: 23.1373, lng: 72.4066 }, "Thol Lake"],
+          [{ lat: 22.172, lng: 73.486 }, "Wadhvana Wetland"],
+          [{ lat: 26.9261, lng: 75.0962 }, "Sambhar Lake"],
+        ];
+        // Create an info window to share between markers.
+        const infoWindow = new google.maps.InfoWindow();
+
+        // Create the markers.
+        tourStops.forEach(([position, title], i) => {
+          const marker = new google.maps.Marker({
+            position,
+            map,
+            title: `${i + 1}. ${title}`,
+            label: `${i + 1}`,
+            optimized: false,
+          });
+
+          // Add a click listener for each marker, and set up the info window.
+          marker.addListener("click", () => {
+            infoWindow.close();
+            infoWindow.setContent(marker.getTitle());
+            infoWindow.open(marker.getMap(), marker);
+          });
+        });
+
+        // Create legend
+        const legendContainer = document.getElementById("legend-container");
+
+        for (const [i, [position, title]] of tourStops.entries()) {
+          const legendItem = document.createElement("div");
+          legendItem.classList.add("legend-item");
+
+          const legendColor = document.createElement("div");
+          legendColor.classList.add("legend-color");
+          legendColor.style.backgroundColor = getRandomColor(); // You can replace this with specific colors for each type
+
+          const legendLabel = document.createElement("div");
+          legendLabel.textContent = `${i + 1}. ${title}`;
+
+          legendItem.appendChild(legendColor);
+          legendItem.appendChild(legendLabel);
+          legendContainer.appendChild(legendItem);
+        }
+      }
+
+      function getRandomColor() {
+        // Function to generate random color
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      window.initMap = initMap;
+    </script>
+  </body>
+</html>
