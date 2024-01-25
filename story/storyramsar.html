@@ -1,244 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramsar Sites of Gujarat</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <body>
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly"
-        defer
-      ></script>
-      <div id="container">
-        <div id="map-container">
-            <div id="map">
-            </div>
-            <h3>Ramsar sites</h3>
-            <p>The Ramsar convention entered into force in India on 1 February 1982. India currently has 75 sites designated as Wetlands of International Importance (Ramsar Sites). This is the highest in South Asia.</p>
-        </div>
-        
-    </body>
+  <title>Ramsar Sites of Gujarat</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" async></script>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
 
-    <style>
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        #container {
-            height: 100%;
-            display: flex;
-        }
-
-        #sidebar {
-            flex-basis: 25%;
-            padding: 1rem;
-            max-width: 30rem;
-            height: 100%;
-            border-right: 1px solid #ccc;
-            box-sizing: border-box;
-            overflow: auto;
-        }
-
-        #map-container {
-            flex-basis: 60%;
-            flex-grow: 1;
-            height: 100%;
-        }
-
-        #map {
-            height: 100%;
-        }
-
-        #legend {
-            flex-basis: 15%;
-            padding: 1rem;
-            background-color: #f2f2f2;
-            box-sizing: border-box;
-            overflow: auto;
-        }
-
-        #legend h3 {
-            margin-top: 0;
-            text-align: right;
-        }
-
-        #legend img {
-            vertical-align: middle;
-        }
-
-        #directions-panel {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #e6e6e6;
-        }
-
-        select,
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        #submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #submit:hover {
-            background-color: #45a049;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-        }
-    </style>
+    #map {
+      height: 100%;
+    }
+  </style>
 </head>
-<script>
-    function initMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 21.1243, lng: 70.8242 },
-              zoom: 8,
-              mapTypeId: "terrain"
-            });
-    const tourStops = {
-        KhijadiyaWildlifeSanctuary: {
-    center: {lat: 22.51, lng: 70.14 },
-    area: 605,
-  },
-  Nalsarovar: {
-    center: { lat: 22.46, lng: 72.02},
-    area: 0.12,
-  },
-  TholLake: {
-    center: { lat: 23.1373, lng: 72.4066 },
-    area:0.0699 ,
-  },
-  WadhvanaWetland: {
-    center: { lat: 22.172, lng: 73.486 },
-    population: 0.0120,
-  },
-  SambharLake: {
-    center: { lat: 26.9261, lng: 75.0962 },
-    population: 0.22,
-  },
-};
-    // Construct the circle for each value in citymap.
-  // Note: We scale the area of the circle based on the population.
-  for (const tourStops in map) {
-    // Add the circle for this city to the map.
-    const tourStopCircle = new google.maps.Circle({
-      strokeColor: "#FFFF00",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#00A36C",
-      fillOpacity: 0.35,
-      map,
-      center: map[tourStops].center,
-      radius: Math.sqrt(map[tourStops].area) * 100,
-    });
-  }
-const features = [
-  {
-      position: new google.maps.LatLng(22.51, 70.14),
-      type: "Wildlife Sanctuary",
-      label: "Khijadiya"
-   },
-     {
-      position: new google.maps.LatLng(22.46, 72.02),
-      type: "Bird Sanctuary",
-      label: "Nalsarovar"
-   },
-     {
-      position: new google.maps.LatLng(23.1373, 72.4066),
-      type: "Thol Bird Sanctuary",
-      label: "Thol Lake"
-    },
-    {
-      position: new google.maps.LatLng(22.172, 73.486),
-      type: "Wetlands",
-      label: "Wadhvana Wetland"
-    },
-    {
-      position: new google.maps.LatLng(26.9261, 75.0962),
-      type: "Salt Lake",
-      label: "Sambhar Salt Lake"
-    },
-];
-features.forEach((feature) => {
-    new google.maps.Marker({
-      position: feature.position,
-      map: map,
-    });
-  });
-
-  const legend = document.getElementById("legend");
-
-  for (const key in icons) {
-    const type = icons[key];
-    const name = type.name;
-    const div = document.createElement("div");
-
-    div.innerHTML = '<img src="' +  '"> ' + name;
-    legend.appendChild(div);
-  }
-
-  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-}
-
-window.initMap = initMap;
-</script>
- 
 
 <body>
-    
-        <div id="Legend">
-            
-        </div>
-        <div id="sidebar">
-            <div>
-                <b>Start:</b>
-                <select id="start">
-                    <option value="Gir National Park, GJ">Gir National Park, GJ</option>
-                </select>
-                <br />
-                <b>Waypoints:</b> <br />
-                <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
-                <select multiple id="waypoints">
-                    <option value="khijadiya, Jamnagar">Khijadiya, GJ</option>
-                    <option value="Nal sarovar Bird sanctuary, Ahmedabad">Nal Sarovar Bird Sanctuary, GJ</option>
-                    <option value="Thol Lake, Mehsana">Thol Lake, GJ</option>
-                    <option value="Wadhvana wetland, vadodara">Vadodara, GJ</option>
-                </select>
-                <br />
-                <b>End:</b>
-                <select id="end">
-                    <option value="sambhar lake, rj">Sambhar Salt Lake, RJ</option>
-                </select>
-                <br />
-                <input type="submit" id="submit" />
-            </div>
-            <div id="directions-panel"></div>
-        </div>
-    </div>
-</body>
-</html>
+  <div id="map"></div>
+  <div id="legend">
+    <h3>Legend</h3>
+  </div>
 
-   
+  <script>
+    const parser = new DOMParser();
+
+    async function initMap() {
+      // Request needed libraries.
+      const { Map } = await google.maps;
+      const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+      const map = new Map(document.getElementById("map"), {
+        center: { lat: 21.1243, lng: 70.8242 },
+        zoom: 10,
+        mapId: "4504f8b37365c3d0",
+      });
+
+      // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
+      // Default marker with title text (no PinElement).
+      const markerViewWithText = new AdvancedMarkerElement({
+        map,
+        position: { lat: 21.1243, lng: 70.8242 },
+        title: "Ramsar Sites of Gujarat",
+      });
+
+      // Adjust the scale.
+      const pinScaled = new PinElement({
+        scale: 2,
+      });
+      const markerViewScaled = new AdvancedMarkerElement({
+        map,
+        position: { lat: 22.51, lng: 70.14 },
+        content: pinScaled.element,
+        title: "Khijadiya Wildlife Sanctuary"
+      });
+
+      // Change the background color.
+      const pinBackground = new PinElement({
+        background: "#FBBC04",
+      });
+      const markerViewBackground = new AdvancedMarkerElement({
+        map,
+        position: { lat: 22.46, lng: 72.02 },
+        content: pinBackground.element,
+        title:  "Nalsarovar"
+      });
+
+      // Change the border color.
+      const pinBorder = new PinElement({
+        borderColor: "#137333",
+      });
+      const markerViewBorder = new AdvancedMarkerElement({
+        map,
+        position: { lat: 23.1373, lng: 72.4066 },
+        content: pinBorder.element,
+        title: "Thol Lake"
+      });
+
+      // Change the glyph color.
+      const pinGlyph = new PinElement({
+        glyphColor: "white",
+      });
+      const markerViewGlyph = new AdvancedMarkerElement({
+        map,
+        position: { lat: 22.172, lng: 73.486 },
+        content: pinGlyph.element,
+        title: "Wadhvana Wetland"
+      });
+
+      // Hide the glyph.
+      const pinNoGlyph = new PinElement({
+        glyph: "white",
+      });
+      const markerViewNoGlyph = new AdvancedMarkerElement({
+        map,
+        position: { lat: 26.9261, lng: 75.0962 },
+        content: pinNoGlyph.element,
+        title: "Sambhar Lake"
+      });
+    }
+
+    initMap();
+    function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 7,
+    center: {lat: 21.1243, lng: 70.8242 }, // Center the map on Chicago, USA.
+  });
+  poly = new google.maps.Polyline({
+    strokeColor: "yellow",
+    strokeOpacity: 1.0,
+    strokeWeight: 3,
+  });
+  poly.setMap(map);
+  // Add a listener for the click event
+  map.addListener("click", addLatLng);
+}
+
+// Handles click events on a map, and adds a new point to the Polyline.
+function addLatLng(event) {
+  const path = poly.getPath();
+
+  // Because path is an MVCArray, we can simply append a new coordinate
+  // and it will automatically appear.
+  path.push(event.latLng);
+  // Add a new marker at the new plotted point on the polyline.
+  new google.maps.Marker({
+    position: event.latLng,
+    title: "#" + path.getLength(),
+    map: map,
+  });
+}
+ // Create legend
+ const legendContainer = document.getElementById("legend");
+
+for (const [i, [position, title]] of tourStops.entries()) {
+  const legendItem = document.createElement("div");
+  legendItem.classList.add("legend-item");
+
+  const legendColor = document.createElement("div");
+  legendColor.classList.add("legend-color");
+  legendColor.style.backgroundColor = getRandomColor(); // You can replace this with specific colors for each type
+
+  const legendLabel = document.createElement("div");
+  legendLabel.textContent = `${i + 1}. ${title}`;
+
+  legendItem.appendChild(legendColor);
+  legendItem.appendChild(legendLabel);
+  legendContainer.appendChild(legendItem);
+}
+
+
+function getRandomColor() {
+// Function to generate random color
+const letters = "0123456789ABCDEF";
+let color = "#";
+for (let i = 0; i < 6; i++) {
+  color += letters[Math.floor(Math.random() * 16)];
+}
+return color;
+}
+window.initMap = initMap;
+  </script>
+</body>
+
+</html>
