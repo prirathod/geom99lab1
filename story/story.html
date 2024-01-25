@@ -1,18 +1,14 @@
-
 <html>
   <head>
-    <title>Ramsar Sites of Gujarat</title>
+    <title>Advanced Marker Basic Customization</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <body>
     <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-      ({key: "AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE", v: "weekly"});</script>
+            ({key: "AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE", v: "weekly"});</script>
     <div id="map"></div>
-    <div id="legend"></div>
- 
-  </body>
-    <style> 
-    /* 
- * Always set the map height explicitly to define the size of the div element
+    </body>
+    <style>
+          /* Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
  #map {
@@ -28,19 +24,19 @@
     margin: 0;
     padding: 0;
   }
-</style>
+    </style> 
   </head>
   <script>
     const parser = new DOMParser();
 
 async function initMap() {
   // Request needed libraries.
-  const { Map, Polyline } = await google.maps.importLibrary("maps");
+  const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
     "marker",
   );
   const map = new Map(document.getElementById("map"), {
-    center: { lat: 21.1243, lng: 70.8242 },
+    center: { lat: 21.1243, lng: 70.8242  },
     zoom: 7,
     mapId: "4504f8b37365c3d0",
   });
@@ -55,58 +51,53 @@ async function initMap() {
   const pinScaled = new PinElement({
     scale: 2,
   });
-  
-    const markerViewScaled = new AdvancedMarkerElement({
-        map,
-        position: { lat: 22.51, lng: 70.14 },
-        content: pinScaled.element,
-        title: "Khijadiya Wildlife Sanctuary"
+  const markerViewScaled = new AdvancedMarkerElement({
+    map,
+    position: { lat: 22.51, lng: 70.14 },
+    content: pinScaled.element,
+    title: "Khijadiya Wildlife Sanctuary"
       });
+  // Change the background color.
+  const pinBackground = new PinElement({
+    background: "#FBBC04",
+  });
+  const markerViewBackground = new AdvancedMarkerElement({
+    map,
+    position: { lat: 22.46, lng: 72.02 },
+    content: pinBackground.element,
+    title:  "Nalsarovar"
+  });
+  // Change the border color.
+  const pinBorder = new PinElement({
+    borderColor: "#137333",
+  });
+  const markerViewBorder = new AdvancedMarkerElement({
+    map,
+    position: { lat: 23.1373, lng: 72.4066 },
+    content: pinBorder.element,
+    title: "Thol Lake"
+  });
+  // Change the glyph color.
+  const pinGlyph = new PinElement({
+    glyphColor: "white",
+  });
+  const markerViewGlyph = new AdvancedMarkerElement({
+    map,
+    position: { lat: 22.172, lng: 73.486 },
+    content: pinGlyph.element,
+    title: "Wadhvana Wetland"
+  });
+  // Hide the glyph.
+  const pinNoGlyph = new PinElement({
 
-      // Change the background color.
-    const pinBackground = new PinElement({
-        background: "#FBBC04",
-      });
-    const markerViewBackground = new AdvancedMarkerElement({
-        map,
-        position: { lat: 22.46, lng: 72.02 },
-        content: pinBackground.element,
-        title:  "Nalsarovar"
-      });
-
-      // Change the border color.
-      const pinBorder = new PinElement({
-        borderColor: "#137333",
-      });
-    const markerViewBorder = new AdvancedMarkerElement({
-        map,
-        position: { lat: 23.1373, lng: 72.4066 },
-        content: pinBorder.element,
-        title: "Thol Lake"
-      });
-
-      // Change the glyph color.
-      const pinGlyph = new PinElement({
-        glyphColor: "white",
-      });
-    const markerViewGlyph = new AdvancedMarkerElement({
-        map,
-        position: { lat: 22.172, lng: 73.486 },
-        content: pinGlyph.element,
-        title: "Wadhvana Wetland"
-      });
-
-      // Hide the glyph.
-      const pinNoGlyph = new PinElement({
-    
-      });
-    const markerViewNoGlyph = new AdvancedMarkerElement({
-        map,
-        position: { lat: 26.9261, lng: 75.0962 },
-        content: pinNoGlyph.element,
-        title: "Sambhar Lake"
-      });
-      const StopCoordinates = [
+  });
+  const markerViewNoGlyph = new AdvancedMarkerElement({
+    map,
+    position: { lat: 26.9261, lng: 75.0962 },
+    content: pinNoGlyph.element,
+    title: "Sambhar Lake"
+  });
+  const StopCoordinates = [
         { lat: 22.51, lng: 70.14},
         { lat: 21.1243, lng: 70.8242 },
         { lat: 22.46, lng: 72.02},
@@ -123,16 +114,12 @@ async function initMap() {
       });
     
       flightPath.setMap(map);
-      
-
-
-    
-  
-      
-
-
-initMap();
 }
 
+initMap();
   </script>
+ 
+
+   
+
 </html>
