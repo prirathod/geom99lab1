@@ -1,202 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ramsar Sites of Gujarat</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <style>
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        font-family: 'Arial', sans-serif;
-      }
-
-      #container {
-        height: 100%;
-        display: flex;
-      }
-
-      #sidebar {
-        flex-basis: 15rem;
-        flex-grow: 1;
-        padding: 1rem;
-        max-width: 30rem;
-        height: 100%;
-        border-right: 1px solid #ccc;
-        box-sizing: border-box;
-        overflow: auto;
-      }
-
-      #map-container {
-        flex-basis: 60%;
-        flex-grow: 4;
-        height: 100%;
-      }
-
-      #map {
-        height: 100%;
-      }
-
-      #legend-container {
-        flex-basis: 25%;
-        padding: 1rem;
-        background-color: #f2f2f2;
-        box-sizing: border-box;
-        overflow: auto;
-      }
-
-      #directions-panel {
-        margin-top: 10px;
-        padding: 10px;
-        background-color: #e6e6e6;
-      }
-
-      select,
-      input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        box-sizing: border-box;
-      }
-
-      #submit {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-      }
-
-      #submit:hover {
-        background-color: #45a049;
-      }
-
-      .legend-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-      }
-
-      .legend-color {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <div id="sidebar">
-        <div>
-          <b>Start:</b>
-          <select id="start">
-            <option value="Gir National Park, GJ">Gir National Park, GJ</option>
-          </select>
-          <br />
-          <b>Waypoints:</b> <br />
-          <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
-          <select multiple id="waypoints">
-            <option value="khijadiya, Jamnagar">Khijadiya, GJ</option>
-            <option value="Nal sarovar Bird sanctuary, Ahmedabad">Nal Sarovar Bird Sanctuary, GJ</option>
-            <option value="Thol Lake, Mehsana">Thol Lake, GJ</option>
-            <option value="Wadhvana wetland, vadodara">Vadodara, GJ</option>
-          </select>
-          <br />
-          <b>End:</b>
-          <select id="end">
-            <option value="sambhar lake, rj">Sambhar Salt Lake, RJ</option>
-          </select>
-          <br />
-          <input type="submit" id="submit" />
+    <body>
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv3MGflguusDaLmV_-BUlmuoUI4EbM88w&callback=initMap&v=weekly"
+        defer
+      ></script>
+      <div id="container">
+        <div id="map-container">
+            <div id="map">
+            </div>
+            <h3>Ramsar sites</h3>
+            <p>The Ramsar convention entered into force in India on 1 February 1982. India currently has 75 sites designated as Wetlands of International Importance (Ramsar Sites). This is the highest in South Asia.</p>
         </div>
-        <!-- Directions panel to display route details -->
-        <div id="directions-panel"></div>
-      </div>
-      <div id="map-container">
-        <div id="map"></div>
-      </div>
-      <div id="legend-container"></div>
-    </div>
+        
+    </body>
 
-    <!-- Google Maps API with callback to initialize the map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" 
-    defer>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
 
-    </script>
+        #container {
+            height: 100%;
+            display: flex;
+        }
 
-    <!-- Your JavaScript code -->
-    <script type="module">
-      // The following example creates five accessible and
-      // focusable markers.
-      function initMap() {
+        #sidebar {
+            flex-basis: 25%;
+            padding: 1rem;
+            max-width: 30rem;
+            height: 100%;
+            border-right: 1px solid #ccc;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        #map-container {
+            flex-basis: 60%;
+            flex-grow: 1;
+            height: 100%;
+        }
+
+        #map {
+            height: 100%;
+        }
+
+        #legend {
+            flex-basis: 15%;
+            padding: 1rem;
+            background-color: #f2f2f2;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        #legend h3 {
+            margin-top: 0;
+            text-align: right;
+        }
+
+        #legend img {
+            vertical-align: middle;
+        }
+
+        #directions-panel {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e6e6e6;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        #submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #submit:hover {
+            background-color: #45a049;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<script>
+    function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 8,
-          center: { lat: 21.1243, lng: 70.8242 },
-        });
-        // Set LatLng and title text for the markers. The first marker (Boynton Pass)
-        // receives the initial focus when tab is pressed. Use arrow keys to
-        // move between markers; press tab again to cycle through the map controls.
-        const tourStops = [
-          [{ lat: 22.51, lng: 70.14 }, "Khijadiya Wildlife Sanctuary"],
-          [{ lat: 22.46, lng: 72.02 }, "Nalsarovar"],
-          [{ lat: 23.1373, lng: 72.4066 }, "Thol Lake"],
-          [{ lat: 22.172, lng: 73.486 }, "Wadhvana Wetland"],
-          [{ lat: 26.9261, lng: 75.0962 }, "Sambhar Lake"],
-        ];
-        // Create an info window to share between markers.
-        const infoWindow = new google.maps.InfoWindow();
+            center: { lat: 21.1243, lng: 70.8242 },
+              zoom: 8,
+              mapTypeId: "terrain"
+            });
+    const tourStops = {
+        KhijadiyaWildlifeSanctuary: {
+    center: {lat: 22.51, lng: 70.14 },
+    area: 605,
+  },
+  Nalsarovar: {
+    center: { lat: 22.46, lng: 72.02},
+    area: 0.12,
+  },
+  TholLake: {
+    center: { lat: 23.1373, lng: 72.4066 },
+    area:0.0699 ,
+  },
+  WadhvanaWetland: {
+    center: { lat: 22.172, lng: 73.486 },
+    population: 0.0120,
+  },
+  SambharLake: {
+    center: { lat: 26.9261, lng: 75.0962 },
+    population: 0.22,
+  },
+};
+    // Construct the circle for each value in citymap.
+  // Note: We scale the area of the circle based on the population.
+  for (const tourStops in map) {
+    // Add the circle for this city to the map.
+    const tourStopCircle = new google.maps.Circle({
+      strokeColor: "#FFFF00",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#00A36C",
+      fillOpacity: 0.35,
+      map,
+      center: map[tourStops].center,
+      radius: Math.sqrt(map[tourStops].area) * 100,
+    });
+  }
+const features = [
+  {
+      position: new google.maps.LatLng(22.51, 70.14),
+      type: "Wildlife Sanctuary",
+      label: "Khijadiya"
+   },
+     {
+      position: new google.maps.LatLng(22.46, 72.02),
+      type: "Bird Sanctuary",
+      label: "Nalsarovar"
+   },
+     {
+      position: new google.maps.LatLng(23.1373, 72.4066),
+      type: "Thol Bird Sanctuary",
+      label: "Thol Lake"
+    },
+    {
+      position: new google.maps.LatLng(22.172, 73.486),
+      type: "Wetlands",
+      label: "Wadhvana Wetland"
+    },
+    {
+      position: new google.maps.LatLng(26.9261, 75.0962),
+      type: "Salt Lake",
+      label: "Sambhar Salt Lake"
+    },
+];
+features.forEach((feature) => {
+    new google.maps.Marker({
+      position: feature.position,
+      map: map,
+    });
+  });
 
-        // Create the markers.
-        tourStops.forEach(([position, title], i) => {
-          const marker = new google.maps.Marker({
-            position,
-            map,
-            title: `${i + 1}. ${title}`,
-            label: `${i + 1}`,
-            optimized: false,
-          });
+  const legend = document.getElementById("legend");
 
-          // Add a click listener for each marker, and set up the info window.
-          marker.addListener("click", () => {
-            infoWindow.close();
-            infoWindow.setContent(marker.getTitle());
-            infoWindow.open(marker.getMap(), marker);
-          });
-        });
+  for (const key in icons) {
+    const type = icons[key];
+    const name = type.name;
+    const div = document.createElement("div");
 
-        // Create legend
-        const legendContainer = document.getElementById("legend-container");
+    div.innerHTML = '<img src="' +  '"> ' + name;
+    legend.appendChild(div);
+  }
 
-        for (const [i, [position, title]] of tourStops.entries()) {
-          const legendItem = document.createElement("div");
-          legendItem.classList.add("legend-item");
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+}
 
-          const legendColor = document.createElement("div");
-          legendColor.classList.add("legend-color");
-          legendColor.style.backgroundColor = getRandomColor(); // You can replace this with specific colors for each type
+window.initMap = initMap;
+</script>
+ 
 
-          const legendLabel = document.createElement("div");
-          legendLabel.textContent = `${i + 1}. ${title}`;
-
-          legendItem.appendChild(legendColor);
-          legendItem.appendChild(legendLabel);
-          legendContainer.appendChild(legendItem);
-        }
-      }
-
-      function getRandomColor() {
-        // Function to generate random color
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
-
-      window.initMap = initMap;
-    </script>
-  </body>
+<body>
+    
+        <div id="Legend">
+            
+        </div>
+        <div id="sidebar">
+            <div>
+                <b>Start:</b>
+                <select id="start">
+                    <option value="Gir National Park, GJ">Gir National Park, GJ</option>
+                </select>
+                <br />
+                <b>Waypoints:</b> <br />
+                <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
+                <select multiple id="waypoints">
+                    <option value="khijadiya, Jamnagar">Khijadiya, GJ</option>
+                    <option value="Nal sarovar Bird sanctuary, Ahmedabad">Nal Sarovar Bird Sanctuary, GJ</option>
+                    <option value="Thol Lake, Mehsana">Thol Lake, GJ</option>
+                    <option value="Wadhvana wetland, vadodara">Vadodara, GJ</option>
+                </select>
+                <br />
+                <b>End:</b>
+                <select id="end">
+                    <option value="sambhar lake, rj">Sambhar Salt Lake, RJ</option>
+                </select>
+                <br />
+                <input type="submit" id="submit" />
+            </div>
+            <div id="directions-panel"></div>
+        </div>
+    </div>
+</body>
 </html>
+
+   
