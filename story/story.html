@@ -1,125 +1,215 @@
 <html>
   <head>
-    <title>Advanced Marker Basic Customization</title>
+    <title>Ramsar Sites in Gujarat</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <body>
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-            ({key: "AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE", v: "weekly"});</script>
-    <div id="map"></div>
-    </body>
+
     <style>
-          /* Always set the map height explicitly to define the size of the div element
- * that contains the map. 
- */
- #map {
-    height: 100%;
-  }
-  
-  /* 
-   * Optional: Makes the sample page fill the window. 
-   */
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-    </style> 
-  </head>
-  <script>
-    const parser = new DOMParser();
-
-async function initMap() {
-  // Request needed libraries.
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
-    "marker",
-  );
-  const map = new Map(document.getElementById("map"), {
-    center: { lat: 21.1243, lng: 70.8242  },
-    zoom: 7,
-    mapId: "4504f8b37365c3d0",
-  });
-  // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
-  // Default marker with title text (no PinElement).
-  const markerViewWithText = new AdvancedMarkerElement({
-    map,
-    position: { lat: 21.1243, lng: 70.8242},
-    title: "Ramsar sites of Gujarat",
-  });
-  // Adjust the scale.
-  const pinScaled = new PinElement({
-    scale: 2,
-  });
-  const markerViewScaled = new AdvancedMarkerElement({
-    map,
-    position: { lat: 22.51, lng: 70.14 },
-    content: pinScaled.element,
-    title: "Khijadiya Wildlife Sanctuary"
-      });
-  // Change the background color.
-  const pinBackground = new PinElement({
-    background: "#FBBC04",
-  });
-  const markerViewBackground = new AdvancedMarkerElement({
-    map,
-    position: { lat: 22.46, lng: 72.02 },
-    content: pinBackground.element,
-    title:  "Nalsarovar"
-  });
-  // Change the border color.
-  const pinBorder = new PinElement({
-    borderColor: "#137333",
-  });
-  const markerViewBorder = new AdvancedMarkerElement({
-    map,
-    position: { lat: 23.1373, lng: 72.4066 },
-    content: pinBorder.element,
-    title: "Thol Lake"
-  });
-  // Change the glyph color.
-  const pinGlyph = new PinElement({
-    glyphColor: "white",
-  });
-  const markerViewGlyph = new AdvancedMarkerElement({
-    map,
-    position: { lat: 22.172, lng: 73.486 },
-    content: pinGlyph.element,
-    title: "Wadhvana Wetland"
-  });
-  // Hide the glyph.
-  const pinNoGlyph = new PinElement({
-
-  });
-  const markerViewNoGlyph = new AdvancedMarkerElement({
-    map,
-    position: { lat: 26.9261, lng: 75.0962 },
-    content: pinNoGlyph.element,
-    title: "Sambhar Lake"
-  });
-  const StopCoordinates = [
-        { lat: 22.51, lng: 70.14},
-        { lat: 21.1243, lng: 70.8242 },
-        { lat: 22.46, lng: 72.02},
-        { lat: 23.1373, lng: 72.4066 },
-        { lat: 22.172, lng: 73.486 },
-        { lat: 26.9261, lng: 75.0962 }
-      ];
-      const flightPath = new google.maps.Polyline({
-        path: StopCoordinates,
-        geodesic: true,
-        strokeColor: "blue",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-      });
+        /* Styles for the map and legend the code is taken from the https://developers.google.com/maps/documentation/javascript/examples/advanced-markers-basic-style google cloud platform and bit modified */
+        #map {
+        height: 100%;
+        position: relative;
+        width: 100%;
+      }
     
-      flightPath.setMap(map);
-}
+      #legend {
+        position: absolute;
+        top: 10px; /* Adjust the top position  */
+        left: 10px; /* Adjust the left position  */
+        padding: 1rem;
+        background-color: rgba(242, 242, 242, 0.8); /* Slightly opaque background */
+        box-sizing: border-box;
+        overflow: auto;
+        border-radius: 5px;
+      }
 
-initMap();
-  </script>
- 
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
 
-   
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+      }
 
+      .legend-label {
+        flex-grow: 1;
+      }
+      .marker-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+            background-color:white; /* Marker label background color */
+            padding: 6px; /* Adjust padding as needed */
+            border-radius: 50%; /* Make it a circle in the marker the code is copied from google cloud platform*/
+            font-size: 25px; /* Adjust font size as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+     #Title {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+     }
+     h1 {
+        text-align: center;
+        text-decoration: none;
+     }
+     h3 {
+        text-align: left;
+        text-justify: auto;
+     }
+     p{
+        text-align: justify;
+     }
+
+
+     
+     
+
+      </style>
+  </head>
+
+  <body>
+    <script>
+      (g => {
+        var h, a, k, p = "The Google Maps JavaScript API",c = "google",l = "importLibrary",q = "__ib__",m = document,b = window;b = b[c] || (b[c] = {});var d = b.maps || (b.maps = {}),r = new Set,e = new URLSearchParams,u = () => h || (h = new Promise(async(f, n) => {await(a = m.createElement("script"));e.set("libraries", [...r] + "");for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);e.set("callback", c + ".maps." + q);a.src = `https://maps.${c}apis.com/maps/api/js?` + e;d[q] = f;a.onerror = () => h = n(Error(p + " could not load."));a.nonce = m.querySelector("script[nonce]")?.nonce || "";m.head.append(a);}));
+        d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)); })({key: "AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE",v: "weekly"});
+    </script>
+<!-- Code taken from: https://developers.google.com/maps/documentation/javascript/examples -->
+    <div id="map"></div>
+    <div id="legend"></div>
+    <!-- information taken from: https://en.wikipedia.org/wiki/List_of_Ramsar_sites_in_India -->
+    <p id="Title">
+        <h1>Ramsar sites in Gujarat</h1>
+
+    </p>
+    <h3>Khijadiya Bird Sanctuary</h3>
+
+    <p>Khijadiya Bird Sanctuary is a bird sanctuary located in Jamnagar district of Gujarat, India. About 300 species of migratory birds have been recorded here.The sanctuary is located at the watershed of Ruparel river and Kalindri at the North East coastal region of Jamnagar district in the Gulf of Kutch and has a very special and unique ecosystem. Further, as sanctuary is located near Narara Island, and has a bio-diversified coral reef.</p>
+     
+    <h3>Nal Sarovar Bird Sanctuary</h3>
+    <p>Nal Sarovar Bird Sanctuary, consisting primarily of a 120.82-square-kilometre (46.65 sq mi) lake and ambient marshes, is situated about 64 km to the west of Ahmedabad near Sanand Village, in the Indian state of Gujarat. Mainly inhabited by migratory birds in winter and spring, it is the largest wetland bird sanctuary in Gujarat, and one of the largest in India. It was declared a bird sanctuary in April 1969.</p>
+     
+    <h3>Thol Lake</h3>
+    <p>Thol Lake is an artificial lake near Thol village in Kadi in Mehsana District in the Indian state of Gujarat. A fresh water lake surrounded by marshes, it was built as an irrigation tank in 1912. Declared the Thol Bird Sanctuary in 1988, it is a habitat to 150 species of birds, about 60% of them waterbirds. Many migratory birds nest and breed in the lake and its periphery. The two most prominent species of birds recorded in the sanctuary are flamingoes and sarus crane (Grus antigone). The sanctuary is also proposed to be declared an Eco-Sensitive Zone, conforming to the Environment (Protection) Act, 1986 (29 of 1986), for which draft notification has been prepared.</p>
+    
+    <h3>Wadhvana Wetland</h3>
+    <p>The Wadhwana wetland is a wetland in Dabhoi, Vadodara district in the Indian state of Gujarat. It was formed as a result of an irrigation dam in 1910. Due to its ecological significance, it was designated as a Ramsar wetland site on 2021.The Wadhvana Wetland is considered internationally important as it provides a wintering ground to migratory water birds that migrate on the Central Asian Flyway. These water birds include endangered or near-threatened species like the Dalmatian pelican (Pelecanus crispus), Pallas's fish eagle (Haliaeetus leucoryphus), common pochard (Aythya ferina), ferruginous duck (Aythya nyroca) and grey-headed fish eagle (Icthyophaga ichthyaetus). The red-crested pochard (Netta rufina), a duck that is otherwise rare in Western India, is observed in this wetland during winter.</p>
+    
+    <h3>Sambhar Salt Lake</h3>
+    <p>The Sambhar Salt Lake, India's largest inland salt lake, is located in Sambhar Lake Town, Jaipur district of Rajasthan, India, 80 km (50 mi) southwest of the city of Jaipur and 64 km (40 mi) northeast of Ajmer, Rajasthan. It surrounds the historical Sambhar Lake Town.The lake receives water from six rivers: Mantha, Rupangarh, Khari, Khandela, Medtha and Samod. Lake has 5700 square km catchment area. The lake is an extensive saline wetland, with water depth fluctuating from as few as 60 centimetres (24 in) during the dry season to about 3 meters (10 ft) at the end of the monsoon season.</p>
+    <script>
+      const parser = new DOMParser();
+
+      async function initMap() {
+        // Request needed libraries this code is taken from https://developers.google.com/maps/documentation/javascript/examples/advanced-markers-basic-style#maps_advanced_markers_basic_style-javascript.
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+
+        const map = new Map(document.getElementById("map"), {
+          center: { lat: 21.1243, lng: 70.8242 },
+          zoom: 7,
+          mapId: "4504f8b37365c3d0",
+        });
+
+        // Marker data and coordinates the coordinates were taken from google maps.
+        const StopCoordinates = [
+            { lat: 22.51, lng: 70.14 },
+            { lat: 21.1243, lng: 70.8242 },
+            { lat: 22.46, lng: 72.02 },
+            { lat: 23.1373, lng: 72.4066 },
+            { lat: 22.172, lng: 73.486 },
+            { lat: 26.9261, lng: 75.0962 }
+            ];
+
+            const markerTitles = [
+            "Khijadiya Wildlife Sanctuary",
+            "Ramsar sites of Gujarat",
+            "Nalsarovar",
+            "Thol Lake",
+            "Wadhvana Wetland",
+            "Sambhar Lake"
+            ];
+
+
+        // Create markers thesee are from google cloud platform and bit modified.
+        StopCoordinates.forEach((position, i) => {
+          const markerView = new AdvancedMarkerElement({
+            map,
+            position,
+            title: `Location ${i + 1}`
+          });
+        });
+
+        // Create polyline for showing the story of the ramsar sites and its location from southwest gujarat to west of Rajasthan.
+        const flightPath = new google.maps.Polyline({
+          path: StopCoordinates,
+          geodesic: true,
+          strokeColor: "blue",
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+        });
+
+        flightPath.setMap(map);
+         // Create markers with numbers this would create a number within the markers and the code is taken from google cloud platform.
+         StopCoordinates.forEach((position, i) => {
+          const markerView = new AdvancedMarkerElement({
+            map,
+            position,
+            title: markerTitles[i]
+          });
+
+          const markerNumber = document.createElement("div");
+          markerNumber.classList.add("marker");
+          markerNumber.textContent = i + 1;
+
+          markerView.content.appendChild(markerNumber);
+        });
+
+        // Create legend using google cloud platform under customized map using https://developers.google.com/maps/documentation/javascript/adding-a-legend.
+        const legendContainer = document.getElementById("legend");
+        StopCoordinates.forEach((position, i) => {
+        const legendItem = document.createElement("div");
+        legendItem.classList.add("legend-item");
+
+        const legendColor = document.createElement("div");
+        legendColor.classList.add("legend-color");
+        legendColor.style.backgroundColor = getRandomColor();
+
+        const legendLabel = document.createElement("div");
+        legendLabel.textContent = `${i + 1}. ${markerTitles[i]}`;
+
+        legendItem.appendChild(legendColor);
+        legendItem.appendChild(legendLabel);
+        legendContainer.appendChild(legendItem);
+});
+
+      }
+
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      initMap();
+      window.initMap = initMap;
+    </script>
+
+    <!-- Google Maps API with callback to initialize the map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCM-WWHYHIKY-do4kquMy9Z4wQaQx51AuE&callback=initMap&v=weekly" defer></script>
+  </body>
 </html>
